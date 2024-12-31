@@ -1,4 +1,4 @@
-AC_INIT(Minty Doom, 1.1.0,
+AC_INIT(Minty Doom, 1.0.0,
         chocolate-doom-dev-list@chocolate-doom.org, chocolate-doom)
 
 PACKAGE_SHORTNAME=${PACKAGE_NAME% Doom}
