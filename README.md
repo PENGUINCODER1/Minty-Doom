@@ -14,7 +14,9 @@ New features that Minty Doom brings:
 * The ability to switch to the fist while having a chainsaw
 * The WEAP cheat
    * Not identical to most other ports
+* The MDBER cheat to see if you have berserk active
 * A port of the FHHALL cheat from Doom 95
+   * Code from Crispy Doom
 * A possible fix for the unused PLAYPALs
 * A hopefully more clear IDBEHOLD message
 * Fixed the Ouch Face bug
