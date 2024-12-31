@@ -28,6 +28,7 @@
 
 #include "doomstat.h"
 
+#include "g_game.h"
 
 
 // Index of the special effects (INVUL inverse) map.
@@ -59,9 +60,6 @@ P_Thrust
     player->mo->momx += FixedMul(move,finecosine[angle]); 
     player->mo->momy += FixedMul(move,finesine[angle]);
 }
-
-
-
 
 //
 // P_CalcHeight
@@ -280,13 +278,31 @@ void P_PlayerThink (player_t* player)
 	//  (read: not in the middle of an attack).
 	newweapon = (cmd->buttons&BT_WEAPONMASK)>>BT_WEAPONSHIFT;
 	
+	// Minty Doom:
+	// Let player switch to fist
+	// even if they don't have beserk.
+	if (chainsaw_to_fist)
+	{
 	if (newweapon == wp_fist
+	    && player->weaponowned[wp_chainsaw]
+	    && player->readyweapon == wp_chainsaw)
+	{
+	    newweapon = wp_fist;
+	}
+	else if (newweapon == wp_fist 
+		&& player->weaponowned[wp_chainsaw]) 
+	{
+		newweapon = wp_chainsaw;
+	}
+	}
+	else if (newweapon == wp_fist
 	    && player->weaponowned[wp_chainsaw]
 	    && !(player->readyweapon == wp_chainsaw
 		 && player->powers[pw_strength]))
 	{
-	    newweapon = wp_chainsaw;
+		newweapon = wp_chainsaw;
 	}
+			 
 	
 	if ( (gamemode == commercial)
 	    && newweapon == wp_shotgun 

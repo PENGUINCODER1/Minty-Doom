@@ -77,6 +77,9 @@ int G_VanillaVersionCode(void);
 
 extern int vanilla_savegame_limit;
 extern int vanilla_demo_limit;
+extern int chainsaw_to_fist;
+extern int weap_cheat_enabled;
+extern int fhhall_cheat_enabled;
 
 extern fixed_t forwardmove[2];
 extern fixed_t sidemove[2];

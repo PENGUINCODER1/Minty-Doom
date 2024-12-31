@@ -1,21 +1,33 @@
-# Chocolate Doom
+# Minty Doom
 
-Chocolate Doom aims to accurately reproduce the original DOS version of
-Doom and other games based on the Doom engine in a form that can be
-run on modern computers.
+Minty Doom aims to stay close to the vanilla game while removing some of the
+restrictions that came with it.
 
-Originally, Chocolate Doom was only a Doom source port. The project
-now includes ports of Heretic and Hexen, and Strife.
+Note that the Strife, Heretic, and Hexen ports are *still* the Chocolate Doom versions 
+with no direct edits currently. They will be removed as soon as I figure
+out how to properly remove it.
 
-Chocolate Doom’s aims are:
+New features that Minty Doom brings:
+* Fixes to IDCLEV and IDCHOPPERS
+* "Sky Never Changes" fix
+* IDCLIP Doom 2 restriction removal
+* The ability to switch to the fist while having a chainsaw
+* The WEAP cheat
+   * Not identical to most other ports
+* A port of the FHHALL cheat from Doom 95
+* A possible fix for the unused PLAYPALs
+* A hopefully more clear IDBEHOLD message
+* Fixed the Ouch Face bug
 
- * To always be 100% Free and Open Source software.
- * Portability to as many different operating systems as possible.
- * Accurate reproduction of the original DOS versions of the games,
-   including bugs.
- * Compatibility with the DOS demo, configuration and savegame files.
- * To provide an accurate retro “feel” (display and input should
-   behave the same).
+Note that I am an amature when it comes to this stuff. This is
+my first experience with open source, Doom source port making,
+and the C language as a whole. The repo may be messy and include files
+that shouldn't be here.
+
+Minty Doom stays identical to Chocolate Doom otherwise, so it's
+README is still below.
+
+## Chocolate Doom's README
 
 More information about the philosophy and design behind Chocolate Doom
 can be found in the PHILOSOPHY file distributed with the source code.
@@ -27,7 +39,7 @@ INSTALL file.
 
 ## Configuration File
 
-Chocolate Doom is compatible with the DOS Doom configuration file
+Minty Doom is compatible with the DOS Doom configuration file
 (normally named `default.cfg`). Existing configuration files for DOS
 Doom should therefore simply work out of the box. However, Chocolate
 Doom also provides some extra settings. These are stored in a

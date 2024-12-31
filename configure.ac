@@ -1,14 +1,14 @@
-AC_INIT(Chocolate Doom, 3.1.0,
+AC_INIT(Minty Doom, 1.1.0,
         chocolate-doom-dev-list@chocolate-doom.org, chocolate-doom)
 
 PACKAGE_SHORTNAME=${PACKAGE_NAME% Doom}
 PACKAGE_SHORTDESC="Conservative source port"
 PACKAGE_COPYRIGHT="Copyright (C) 1993-2024"
 PACKAGE_LICENSE="GNU General Public License, version 2"
-PACKAGE_MAINTAINER="Simon Howard"
+PACKAGE_MAINTAINER="CoderPenguin1"
 PACKAGE_URL="https://www.chocolate-doom.org/"
 PACKAGE_RDNS="org.chocolate_doom"
-PACKAGE_BUGREPORT="https://github.com/chocolate-doom/chocolate-doom/issues"
+PACKAGE_BUGREPORT="CoderPenguin1"
 
 AC_CONFIG_AUX_DIR(autotools)
 AC_CANONICAL_HOST

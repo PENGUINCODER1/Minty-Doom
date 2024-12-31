@@ -1108,6 +1108,44 @@ static default_t extra_defaults_list[] =
 
     CONFIG_VARIABLE_INT(vanilla_demo_limit),
 
+	//!
+	// @game doom
+	// 
+	// Minty Doom:
+	// If non-zero, it allows the player to switch to the fist from
+	// the chainsaw, even without berserk active.
+	//
+	
+	CONFIG_VARIABLE_INT(chainsaw_to_fist),
+
+	//!
+	// @game doom
+	//
+	// Minty Doom:
+	// If non-zero, it enables the WEAP cheat.
+	//
+	
+	CONFIG_VARIABLE_INT(weap_cheat_enabled),
+	
+	//!
+	// @game doom
+	//
+	// Minty Doom:
+	// If non-zero, it enables the FHHALL cheat from
+	// Doom95.
+	//
+	
+	CONFIG_VARIABLE_INT(fhhall_cheat_enabled),
+	
+	//!
+	// @game doom
+	//
+	// Minty Doom:
+	// If non-zero, it enables the MDBER cheat.
+	//
+	
+	CONFIG_VARIABLE_INT(mdber_cheat_enabled),
+	
     //!
     // If non-zero, the game behaves like Vanilla Doom, always assuming
     // an American keyboard mapping.  If this has a value of zero, the

@@ -335,6 +335,7 @@
 
 #define STSTR_MUS		"Music Change"
 #define STSTR_NOMUS		"IMPOSSIBLE SELECTION"
+#define STSTR_NOMAP     "IMPOSSIBLE MAP SELECTION"
 #define STSTR_DQDON		"Degreelessness Mode On"
 #define STSTR_DQDOFF	"Degreelessness Mode Off"
 
@@ -344,11 +345,22 @@
 #define STSTR_NCON		"No Clipping Mode ON"
 #define STSTR_NCOFF		"No Clipping Mode OFF"
 
-#define STSTR_BEHOLD	"inVuln, Str, Inviso, Rad, Allmap, or Lite-amp"
+#define STSTR_BEHOLD	"V, S, I, R, A, or L"
 #define STSTR_BEHOLDX	"Power-up Toggled"
 
 #define STSTR_CHOPPERS	"... doesn't suck - GM"
 #define STSTR_CLEV		"Changing Level..."
+
+// Minty Doom: For the WEAP Cheat
+#define STSTR_WEAP      "1-9"
+#define STSTR_WEAPADD   "Weapon Added"
+#define STSTR_WEAPSUB   "Weapon Removed"
+
+// Minty Doom: For the FHHALL Cheat
+#define STSTR_MASSACRE  "BY REQUEST..."
+
+// Minty Doom: For the MDBER Cheat
+#define STSTR_NOBER   "No Berserk"
 
 //
 //	F_Finale.C

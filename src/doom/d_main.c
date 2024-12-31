@@ -361,6 +361,9 @@ void D_BindVariables(void)
     M_BindIntVariable("snd_channels",           &snd_channels);
     M_BindIntVariable("vanilla_savegame_limit", &vanilla_savegame_limit);
     M_BindIntVariable("vanilla_demo_limit",     &vanilla_demo_limit);
+	M_BindIntVariable("chainsaw_to_fist",       &chainsaw_to_fist);
+	M_BindIntVariable("weap_cheat_enabled",     &weap_cheat_enabled);
+	M_BindIntVariable("fhhall_cheat_enabled",    &fhhall_cheat_enabled);
     M_BindIntVariable("show_endoom",            &show_endoom);
     M_BindIntVariable("show_diskicon",          &show_diskicon);
 

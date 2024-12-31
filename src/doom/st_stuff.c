@@ -318,6 +318,14 @@ cheatseq_t cheat_ammo = CHEAT("idkfa", 0);
 cheatseq_t cheat_ammonokey = CHEAT("idfa", 0);
 cheatseq_t cheat_noclip = CHEAT("idspispopd", 0);
 cheatseq_t cheat_commercial_noclip = CHEAT("idclip", 0);
+cheatseq_t cheat_massacre = CHEAT("fhhall", 0);
+
+// Minty Doom: WEAP cheat
+cheatseq_t cheat_weap = CHEAT("weap", 0);
+cheatseq_t cheat_weapx = CHEAT("weap", 1);
+
+// Minty Doom: MDBER cheat
+cheatseq_t cheat_mdber = CHEAT("mdber", 0);
 
 cheatseq_t	cheat_powerup[7] =
 {
@@ -342,7 +350,6 @@ void ST_Stop(void);
 
 void ST_refreshBackground(void)
 {
-
     if (st_statusbaron)
     {
         V_UseBuffer(st_backing_screen);
@@ -360,7 +367,6 @@ void ST_refreshBackground(void)
 
 	V_CopyRect(ST_X, 0, st_backing_screen, ST_WIDTH, ST_HEIGHT, ST_X, ST_Y);
     }
-
 }
 
 
@@ -438,10 +444,44 @@ ST_Responder (event_t* ev)
 	
 	plyr->message = DEH_String(STSTR_KFAADDED);
       }
+	  
+	  // Minty Doom: FHHALL Cheat from Doom95.
+	  // Code taken/adapted from Crispy Doom/st_stuff.c:476-509
+	  else if (cht_CheckCheat(&cheat_massacre, ev->data2) && fhhall_cheat_enabled)
+	  {
+			thinker_t *th;
+			extern int numbraintargets;
+			extern void A_PainDie(mobj_t *);
+
+			for (th = thinkercap.next; th != &thinkercap; th = th->next)
+			{
+				if (th->function.acp1 == (actionf_p1)P_MobjThinker)
+				{
+					mobj_t *mo = (mobj_t *)th;
+
+					if (mo->flags & MF_COUNTKILL || mo->type == MT_SKULL)
+					{					
+						if (mo->health > 0)
+						{			
+							P_DamageMobj(mo, NULL, NULL, 10000);
+						}
+						if (mo->type == MT_PAIN)
+						{				
+							A_PainDie(mo);
+							P_SetMobjState(mo, S_PAIN_DIE6);
+						}
+					}
+				}				
+			}		
+
+			// [crispy] disable brain spitters
+			numbraintargets = -1;
+			
+			plyr->message = DEH_String(STSTR_MASSACRE);
+	 }
       // 'mus' cheat for changing music
       else if (cht_CheckCheat(&cheat_mus, ev->data2))
       {
-	
 	char	buf[3];
 	int		musnum;
 	
@@ -473,15 +513,10 @@ ST_Responder (event_t* ev)
 	    S_ChangeMusic(musnum, 1);
 	}
       }
-      else if ( (logical_gamemission == doom 
-                 && cht_CheckCheat(&cheat_noclip, ev->data2))
-             || (logical_gamemission != doom 
-                 && cht_CheckCheat(&cheat_commercial_noclip,ev->data2)))
+	
+	  // Minty Doom: Removed DOOM IDCLIP restriction.
+      else if (cht_CheckCheat(&cheat_noclip, ev->data2) || cht_CheckCheat(&cheat_commercial_noclip,ev->data2))
       {	
-        // Noclip cheat.
-        // For Doom 1, use the idspipsopd cheat; for all others, use
-        // idclip
-
 	plyr->cheats ^= CF_NOCLIP;
 	
 	if (plyr->cheats & CF_NOCLIP)
@@ -505,6 +540,62 @@ ST_Responder (event_t* ev)
 	}
       }
       
+	  // Minty Doom: WEAP menu.
+	  if (cht_CheckCheat(&cheat_weap, ev->data2) && weap_cheat_enabled)
+	  {
+		plyr->message = DEH_String(STSTR_WEAP);
+	  }  
+	
+	  // Minty Doom: WEAPX cheat.
+	  if (cht_CheckCheat(&cheat_weapx, ev->data2) && weap_cheat_enabled)
+	  {
+		char	buf[1];
+		int weapon;
+		cht_GetParam(&cheat_weapx, buf);
+		weapon = buf[0] - '1';
+		
+		if (weapon > -1)
+		{
+			switch (weapon)
+			{
+				// Add or remove the selected weapon if
+				// the fist wasn't selected.
+				default:
+					if (!plyr->weaponowned[weapon])
+					{
+						plyr->weaponowned[weapon] = true;
+						plyr->message = DEH_String(STSTR_WEAPADD);
+					}
+					else
+					{
+						plyr->weaponowned[weapon] = false;
+						plyr->message = DEH_String(STSTR_WEAPSUB);
+						// Switch to the fist if the weapon the
+						// player is holding was removed.
+						if (plyr->readyweapon == weapon)
+						{
+							plyr->pendingweapon = wp_fist;
+						}
+					}
+					break;
+					
+				// Give player berserk if they selected the fist.
+				case wp_fist:
+					if (!plyr->powers[pw_strength])
+					{
+						plyr->powers[pw_strength] = 1;
+						plyr->message = DEH_String(GOTBERSERK);
+					}
+					// Remove berserk if it was already on.
+					else
+					{	 
+						plyr->powers[pw_strength] = 0;
+					}
+					break;
+			}
+		}
+	  }
+	  
       // 'behold' power-up menu
       if (cht_CheckCheat(&cheat_powerup[6], ev->data2))
       {
@@ -514,7 +605,7 @@ ST_Responder (event_t* ev)
       else if (cht_CheckCheat(&cheat_choppers, ev->data2))
       {
 	plyr->weaponowned[wp_chainsaw] = true;
-	plyr->powers[pw_invulnerability] = true;
+	plyr->powers[pw_invulnerability] = 1050;
 	plyr->message = DEH_String(STSTR_CHOPPERS);
       }
       // 'mypos' for player position
@@ -568,22 +659,27 @@ ST_Responder (event_t* ev)
       {
           if (epsd < 1)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
           if (epsd > 4)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
           if (epsd == 4 && gameversion < exe_ultimate)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
           if (map < 1)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
           if (map > 9)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
       }
@@ -591,10 +687,15 @@ ST_Responder (event_t* ev)
       {
           if (map < 1)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
-          if (map > 40)
+		  // Minty Doom: Fixed a bug that allowed
+		  // the player to warp to levels beyond
+		  // map32.
+          if (map > 32)
           {
+			  plyr->message = DEH_String(STSTR_NOMAP);
               return false;
           }
       }
@@ -603,6 +704,20 @@ ST_Responder (event_t* ev)
       plyr->message = DEH_String(STSTR_CLEV);
       G_DeferedInitNew(gameskill, epsd, map);
     }
+	
+	// Minty Doom: MDBER Cheat.
+	// Tells the player if they have berserk.
+	if (cht_CheckCheat(&cheat_mdber, ev->data2))
+	{
+		if (plyr->powers[pw_strength])
+		{
+			plyr->message = DEH_String(GOTBERSERK);
+		}
+		else
+		{
+			plyr->message = DEH_String(STSTR_NOBER);
+		}
+	}
   }
   return false;
 }
@@ -687,7 +802,9 @@ void ST_updateFaceWidget(void)
 	    // being attacked
 	    priority = 7;
 	    
-	    if (plyr->health - st_oldhealth > ST_MUCHPAIN)
+	    //if (plyr->health - st_oldhealth > ST_MUCHPAIN)
+		// Minty Doom: Fixed the Ouch Face bug.
+		if (st_oldhealth - plyr->health > ST_MUCHPAIN)
 	    {
 		st_facecount = ST_TURNCOUNT;
 		st_faceindex = ST_calcPainOffset() + ST_OUCHOFFSET;
@@ -735,12 +852,13 @@ void ST_updateFaceWidget(void)
 	}
     }
   
+	// Minty Doom: Fixed the Ouch Face bug.
     if (priority < 7)
     {
 	// getting hurt because of your own damn stupidity
 	if (plyr->damagecount)
 	{
-	    if (plyr->health - st_oldhealth > ST_MUCHPAIN)
+	    if (st_oldhealth - plyr->health > ST_MUCHPAIN)
 	    {
 		priority = 7;
 		st_facecount = ST_TURNCOUNT;
@@ -905,7 +1023,7 @@ void ST_doPaletteStuff(void)
 	if (palette >= NUMREDPALS)
 	    palette = NUMREDPALS-1;
 
-	palette += STARTREDPALS;
+	palette += STARTREDPALS-1;
     }
 
     else if (plyr->bonuscount)
@@ -915,7 +1033,7 @@ void ST_doPaletteStuff(void)
 	if (palette >= NUMBONUSPALS)
 	    palette = NUMBONUSPALS-1;
 
-	palette += STARTBONUSPALS;
+	palette += STARTBONUSPALS-1;
     }
 
     else if ( plyr->powers[pw_ironfeet] > 4*32

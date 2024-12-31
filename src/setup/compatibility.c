@@ -26,6 +26,9 @@
 
 int vanilla_savegame_limit = 1;
 int vanilla_demo_limit = 1;
+int chainsaw_to_fist = 1;
+int weap_cheat_enabled = 1;
+int fhhall_cheat_enabled = 1;
 
 void CompatibilitySettings(TXT_UNCAST_ARG(widget), void *user_data)
 {
@@ -40,6 +43,12 @@ void CompatibilitySettings(TXT_UNCAST_ARG(widget), void *user_data)
                                    &vanilla_savegame_limit),
                    TXT_NewCheckBox("Vanilla demo limit",
                                    &vanilla_demo_limit),
+					TXT_NewCheckBox("Chainsaw To Fist w/o Berserk",
+                                   &chainsaw_to_fist),
+					TXT_NewCheckBox("WEAP Cheat",
+                                   &weap_cheat_enabled),
+					TXT_NewCheckBox("FHHALL Cheat",
+                                   &fhhall_cheat_enabled),
                    NULL);
 }
 
@@ -47,5 +56,8 @@ void BindCompatibilityVariables(void)
 {
     M_BindIntVariable("vanilla_savegame_limit", &vanilla_savegame_limit);
     M_BindIntVariable("vanilla_demo_limit",     &vanilla_demo_limit);
+	M_BindIntVariable("chainsaw_to_fist",     &chainsaw_to_fist);
+	M_BindIntVariable("weap_cheat_enabled",     &weap_cheat_enabled);
+	M_BindIntVariable("fhhall_cheat_enabled",    &fhhall_cheat_enabled);
 }
 

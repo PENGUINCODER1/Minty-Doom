@@ -232,6 +232,13 @@ int		bodyqueslot;
  
 int             vanilla_savegame_limit = 1;
 int             vanilla_demo_limit = 1;
+
+// Minty Doom: Don't honestly
+// know why these are required.
+// Will look into later.
+int 			chainsaw_to_fist = 1;
+int             weap_cheat_enabled = 1;
+int             fhhall_cheat_enabled = 1;
  
 int G_CmdChecksum (ticcmd_t* cmd) 
 { 
@@ -245,9 +252,8 @@ int G_CmdChecksum (ticcmd_t* cmd)
 } 
 
 static boolean WeaponSelectable(weapontype_t weapon)
-{
+{	
     // Can't select the super shotgun in Doom 1.
-
     if (weapon == wp_supershotgun && logical_gamemission == doom)
     {
         return false;
@@ -271,12 +277,8 @@ static boolean WeaponSelectable(weapontype_t weapon)
     // Can't select the fist if we have the chainsaw, unless
     // we also have the berserk pack.
 
-    if (weapon == wp_fist
-     && players[consoleplayer].weaponowned[wp_chainsaw]
-     && !players[consoleplayer].powers[pw_strength])
-    {
-        return false;
-    }
+	// Minty Doom: Removed the fist restriction
+
 
     return true;
 }
@@ -669,8 +671,7 @@ void G_DoLoadLevel (void)
 
     // The "Sky never changes in Doom II" bug was fixed in
     // the id Anthology version of doom2.exe for Final Doom.
-    if ((gamemode == commercial)
-     && (gameversion == exe_final2 || gameversion == exe_chex))
+    if (gamemode == commercial)
     {
         const char *skytexturename;
 
