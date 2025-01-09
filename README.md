@@ -41,7 +41,7 @@ INSTALL file.
 
 ## Configuration File
 
-Minty Doom is compatible with the DOS Doom configuration file
+Chocolate Doom is compatible with the DOS Doom configuration file
 (normally named `default.cfg`). Existing configuration files for DOS
 Doom should therefore simply work out of the box. However, Chocolate
 Doom also provides some extra settings. These are stored in a
