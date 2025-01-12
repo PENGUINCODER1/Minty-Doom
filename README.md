@@ -26,6 +26,8 @@ my first experience with open source, Doom source port making,
 and the C language as a whole. The repo may be messy and include files
 that shouldn't be here.
 
+Also, the only released bin is for win32. Currently you will have to build for your desired system.
+
 Minty Doom stays identical to Chocolate Doom otherwise, so it's
 README is still below.
 
