@@ -21,12 +21,15 @@ New features that Minty Doom brings:
 * A hopefully more clear IDBEHOLD message
 * Fixed the Ouch Face bug
 
-Note that I am an amature when it comes to this stuff. This is
-my first experience with open source, Doom source port making,
+Note that I am an amateur when it comes to this stuff. This is
+my first experience with open source projects, Doom source port making,
 and the C language as a whole. The repo may be messy and include files
 that shouldn't be here.
 
 Also, the only released bin is for win32. Currently you will have to build for your desired system.
+
+Please note that changes made by Minty Doom may or may not break demo compatibility. I deeply suggest
+**not** using this port for demo recording or playback.
 
 Minty Doom stays identical to Chocolate Doom otherwise, so it's
 README is still below.
